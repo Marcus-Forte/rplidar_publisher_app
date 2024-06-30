@@ -6,10 +6,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(USE_GRPC "Publish to default gRPC port" OFF)
 
 add_subdirectory(third_party/rplidar_sdk)
+add_subdirectory(grpc)
 
 add_executable(rplidar_publisher src/main.cc)
 
-add_subdirectory(grpc)
 target_link_libraries(rplidar_publisher rplidar_sdk::rplidar_sdk grpc_publisher)
 add_definitions(-DUSE_GRPC=1)
 
@@ -18,7 +18,12 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 install(TARGETS rplidar_publisher
-# RUNTIME_DEPENDENCIES
+RUNTIME_DEPENDENCIES
+POST_EXCLUDE_REGEXES ".*ld-linux.*"  # Linux dynamic linker
+                    "libc.so"      # Common C libraries
+                    "libgcc_"
+                    "libstdc"
+                    "libm.*"      # Math library
 LIBRARY DESTINATION lib
 RUNTIME DESTINATION bin)
 
