@@ -3,9 +3,9 @@
 #include <grpcpp/security/server_credentials.h>
 #include <grpcpp/server_builder.h>
 
-gRPCServer::gRPCServer() = default;
+SensorsServer::SensorsServer() = default;
 
-void gRPCServer::start() {
+void SensorsServer::start() {
 
   grpc::ServerBuilder builder;
   builder.AddListeningPort("0.0.0.0:50051",
@@ -16,11 +16,11 @@ void gRPCServer::start() {
   std::cout << "Listening..." << std::endl;
 }
 
-void gRPCServer::stop() { server_->Shutdown(); }
+void SensorsServer::stop() { server_->Shutdown(); }
 
-void gRPCServer::put_scan(const msensor::Scan3D &scan) {
+void SensorsServer::publishScan(const msensor::Scan3D &scan) {
   scan_service_.putScan(scan);
 }
-void gRPCServer::put_imu(const msensor::IMUData &imu_data) {
+void SensorsServer::publishImu(const msensor::IMUData &imu_data) {
   scan_service_.putImuData(imu_data);
 }

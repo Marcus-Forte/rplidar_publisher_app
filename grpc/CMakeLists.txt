@@ -2,8 +2,10 @@
 
 add_library(sensors_server
 sensors_server.cc
-sensors_service.cc)
-target_link_libraries(sensors_server sensors_grpc IImu ILidar)
+sensors_client.cc
+sensors_service.cc
+conversions.cc)
+target_link_libraries(sensors_server sensors_grpc sensors_proto IImu ILidar)
 target_include_directories(sensors_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # OpenGL server grpc (https://github.com/Marcus-Forte/learning-opengl/blob/main/grpc/proto/gl_server.proto)

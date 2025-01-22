@@ -39,6 +39,7 @@ ScanService::getScan(::grpc::ServerContext *context,
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
   }
+  std::cout << "Ending Lidar scan stream." << std::endl;
   s_client_connected = false;
   return ::grpc::Status::OK;
 }
@@ -84,6 +85,7 @@ ScanService::getImu(::grpc::ServerContext *context,
       imu_queue_.pop_front();
     }
   }
+  std::cout << "Ending IMU data stream." << std::endl;
   s_client_connected = false;
   return ::grpc::Status::OK;
 }

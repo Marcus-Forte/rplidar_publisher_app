@@ -4,15 +4,20 @@
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/server_builder.h>
 
-class gRPCServer {
+/**
+ * @brief This class manages the gRPC server and provides methods to publish
+ * data.
+ *
+ */
+class SensorsServer {
 public:
-  gRPCServer();
+  SensorsServer();
 
   void start();
   void stop();
 
-  void put_scan(const msensor::Scan3D &scan);
-  void put_imu(const msensor::IMUData &data);
+  void publishScan(const msensor::Scan3D &scan);
+  void publishImu(const msensor::IMUData &data);
 
 private:
   ScanService scan_service_;

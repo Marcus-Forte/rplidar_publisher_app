@@ -14,4 +14,9 @@ struct IMUData {
   uint64_t timestamp;
 };
 
+class IImu {
+public:
+  virtual IMUData getImuData() = 0;
+};
+
 } // namespace msensor

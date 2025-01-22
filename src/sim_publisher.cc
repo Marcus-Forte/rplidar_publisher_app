@@ -1,7 +1,7 @@
 #include "file/File.hh"
+#include "lidar/simLidar.hh"
 #include "recorder/ScanRecorder.hh"
 #include "sensors_server.hh"
-#include "lidar/simLidar.hh"
 #include <getopt.h>
 #include <iostream>
 
@@ -34,13 +34,13 @@ int main(int argc, char **argv) {
     recorder.start();
   }
 
-  gRPCServer server;
+  SensorsServer server;
   server.start();
 
   while (true) {
     const auto scan = simLidar->getScan();
     std::cout << "Scans pts: " << scan.points.size() << std::endl;
-    server.put_scan(scan);
+    server.publishScan(scan);
     recorder.record(scan);
   }
 

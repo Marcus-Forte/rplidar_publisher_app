@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
 
   lidar.startSampling();
 
-  gRPCServer server;
+  SensorsServer server;
   server.start();
 
   std::chrono::high_resolution_clock::time_point last =
@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
                        (static_cast<double>(cloud.points.size()) / 200000.0)
                 << '\n';
 
-      server.put_scan(cloud);
+      server.publishScan(cloud);
     }
   }
 }

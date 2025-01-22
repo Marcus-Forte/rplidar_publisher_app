@@ -14,7 +14,7 @@
 std::mutex g_mutex;
 
 // 100 Hz
-void ImuLoop(gRPCServer &server) {
+void ImuLoop(SensorsServer &server) {
   std::cout << "Start imu loop" << std::endl;
   ICM20948 icm20948(1, ICM20948_ADDR0);
   icm20948.init();
@@ -38,7 +38,7 @@ void ImuLoop(gRPCServer &server) {
     data.gz = static_cast<float>(dbl_gyr_data.z);
     {
       std::lock_guard<std::mutex> lock(g_mutex);
-      server.put_imu(data);
+      server.publishImu(data);
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
 
   lidar->init();
 
-  gRPCServer server;
+  SensorsServer server;
   server.start();
 
   auto imu_loop =
@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
     std::cout << "Scans pts: " << scan.points.size() << std::endl;
     {
       std::lock_guard<std::mutex> lock(g_mutex);
-      server.put_scan(scan);
+      server.publishScan(scan);
     }
     recorder.record(scan);
   }

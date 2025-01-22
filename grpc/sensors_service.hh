@@ -1,8 +1,13 @@
 #pragma once
+
 #include "imu/IImu.hh"
 #include "lidar/ILidar.hh"
 #include "sensors.grpc.pb.h"
 
+/**
+ * @brief Call the methods of this service to publish data via gRPC.
+ *
+ */
 class ScanService : public sensors::SensorService::Service {
 public:
   ScanService();
